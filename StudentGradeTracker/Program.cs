@@ -12,34 +12,45 @@ namespace StudentGradeTracker
 
             while (true)
             {
+                ShowHeader();
+
                 Console.WriteLine("**** - Student Grade Tracker - ****");
                 Console.WriteLine("1. Add Student");
                 Console.WriteLine("2. Add Grade to Student");
                 Console.WriteLine("3. View Students");
                 Console.WriteLine("4. Exit");
+                Console.WriteLine();
                 Console.Write("Choose an option: ");
 
                 string choice = Console.ReadLine();
 
                 if (choice == "1")
                 {
-                    Console.Write("Enter student name: ");
-                    string name = Console.ReadLine();
+                    Console.Write("Enter first name: ");
+                    string firstName = Console.ReadLine();
 
-                    students.Add(new Student(name));
+                    Console.Write("Enter last name: ");
+                    string lastName = Console.ReadLine();
 
-                    Console.WriteLine("Student added!");
+                    students.Add(new Student(firstName, lastName));
+
+                    Console.WriteLine($"Student {firstName} {lastName} added!");
+                    Console.WriteLine("Press ENTER to continue...");
+                    Console.ReadLine();
                 }
                 else if (choice == "2")
                 {
-                    Console.Write("Enter student name: ");
-                    string name = Console.ReadLine();
+                    Console.Write("Enter first name: ");
+                    string firstName = Console.ReadLine();
+
+                    Console.Write("Enter last name: ");
+                    string lastName = Console.ReadLine();
 
                     Student foundStudent = null;
 
                     foreach (Student s in students)
                     {
-                        if (s.Name == name)
+                        if (s.FirstName.Equals(firstName) && s.LastName.Equals(lastName))
                         {
                             foundStudent = s;
                             break;
@@ -55,19 +66,47 @@ namespace StudentGradeTracker
                         foundStudent.Grades.Add(grade);
 
                         Console.WriteLine("Grade added!");
+                        Console.WriteLine("Press ENTER to continue");
+                        Console.ReadLine();
                     }
                     else
                     {
                         Console.WriteLine("Student not found.");
+                        Console.WriteLine("Press ENTER to continue...");
+                        Console.ReadLine();
                     }
                 }
                 else if (choice == "3")
                 {
-                    Console.WriteLine("**** - Student List - ****");
+                    ShowHeader();
 
-                    foreach (Student s in students)
+                    Console.WriteLine("**** - Student List - ****");
+                    Console.WriteLine();
+
+                    if (students.Count == 0)
                     {
-                        Console.WriteLine($"{s.Name} - Average: {s.GetAverage():F2}");
+                        Console.WriteLine("No students found.");
+                    } 
+                    else
+                    {
+                        foreach (Student s in students)
+                        {
+                            Console.WriteLine($"Name: {s.FullName}");
+
+                            if (s.Grades.Count == 0)
+                            {
+                                Console.WriteLine("Grades: None");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Grades: " + string.Join(", ", s.Grades));
+                                Console.WriteLine($"Average: {s.GetAverage():F2}");
+                            }
+                        }
+
+                        Console.WriteLine();
+                        Console.WriteLine("Press ENTER To Continue...");
+                        Console.ReadLine();
                     }
                 }
                 else if (choice == "4")
@@ -79,6 +118,13 @@ namespace StudentGradeTracker
                     Console.WriteLine("Invalid option.");
                 }
             }
+        }
+
+        static void ShowHeader()
+        {
+            Console.Clear();
+            Console.WriteLine("Student Grade Tracker");
+            Console.WriteLine();
         }
     }
 }

@@ -6,12 +6,22 @@ namespace StudentGradeTracker.Classes
 {
     public class Student
     {
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public string FullName 
+        {
+            get
+            {
+                return FirstName + " " + LastName;
+            }
+        }
         public List<int> Grades { get; set; }
 
-        public Student(string name)
+        public Student(string firstName, string lastName)
         {
-            Name = name;
+            FirstName = firstName;
+            LastName = lastName;
             Grades = new List<int>();
         }
 
